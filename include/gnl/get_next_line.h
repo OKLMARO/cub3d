@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/03/30 13:03:19 by oamairi          ###   ########.fr       */
+/*   Created: 2025/05/07 00:47:15 by oamairi           #+#    #+#             */
+/*   Updated: 2025/05/21 13:29:15 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CUB_H__
-# define __CUB_H__
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include <stdio.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 6
+# endif
+
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdbool.h>
-# include "libft/libft.h"
-# include "gnl/get_next_line.h"
+# include <fcntl.h>
+# include <stdio.h>
 
-typedef struct s_cub
-{
-	int		C[3];
-	int		F[3];
-	char	**map;
-	char	*NOtextures;
-	char	*SOtextures;
-	char	*WEtextures;
-	char	*EAtextures;
-}			t_cub;
+char	*get_next_line(int fd);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_strsup(char *s, int c);
+char	*ft_strdup(char *src);
+void	ft_bzero(void *s, size_t n);
+void	ft_swap(char **after_n, char *tmp);
 
 #endif
