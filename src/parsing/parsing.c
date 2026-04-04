@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/03/30 15:35:35 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/04/02 13:37:45 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	checktexture(int fdfile, t_cub *cub)
 	return (free(line), false);
 }
 
-bool	checkrgb(int fdfile)
+bool	checkrgb(int fdfile, t_cub *cub)
 {
 	char	*line;
 
