@@ -16,7 +16,7 @@ static bool	set_texture(char *path, char **dest)
 {
 	if (*dest != NULL)
 		return (false);
-	*dest = ft_strtrim(path, " \t\n");
+	*dest = ft_strtrim(path, " \t\n\r");
 	if (!*dest || ft_strlen(*dest) == 0)
 	{
 		free(*dest);

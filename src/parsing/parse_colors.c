@@ -21,7 +21,8 @@ static bool	valid_rgb_str(char *str)
 		i++;
 	if (!str[i])
 		return (false);
-	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+	while (str[i] && str[i] != ' ' && str[i] != '\t'
+		&& str[i] != '\n' && str[i] != '\r')
 	{
 		if (!ft_isdigit(str[i]))
 			return (false);
@@ -60,7 +61,7 @@ bool	parse_color_line(char *line, int *rgb)
 	if (!split)
 		return (false);
 	ret = parse_rgb_values(split, rgb);
-	free_split(split);
+	ft_free_split(split);
 	return (ret);
 }
 

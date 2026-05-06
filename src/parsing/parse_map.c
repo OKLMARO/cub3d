@@ -23,7 +23,7 @@ static bool	is_valid_map_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] && line[i] != '\n')
+	while (line[i] && line[i] != '\n' && line[i] != '\r')
 	{
 		if (!is_valid_map_char(line[i]))
 			return (false);
@@ -46,7 +46,7 @@ static char	**realloc_map(char **map, char *line, int height)
 		new_map[i] = map[i];
 		i++;
 	}
-	new_map[i] = ft_strtrim(line, "\n");
+	new_map[i] = ft_strtrim(line, "\n\r");
 	new_map[i + 1] = NULL;
 	free(map);
 	return (new_map);

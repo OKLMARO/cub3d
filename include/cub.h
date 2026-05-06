@@ -50,6 +50,6 @@ bool	parse_color_line(char *line, int *rgb);
 bool	is_empty_line(char *line);
 char	*skip_spaces(char *str);
 void	free_cub(t_cub *cub);
-void	free_split(char **split);
+void	ft_free_split(char **split);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,65 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub.h"
+#include "../include/cub.h"
 
-char	*skip_spaces(char *str)
-{
-	while (*str == ' ' || *str == '\t')
-		str++;
-	return (str);
-}
-
-bool	is_empty_line(char *line)
+static void	print_map(t_cub *cub)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	printf("Map (%dx%d):\n", cub->map_w, cub->map_h);
+	while (i < cub->map_h)
 	{
-		if (line[i] != ' ' && line[i] != '\t'
-			&& line[i] != '\n' && line[i] != '\r')
-			return (false);
+		printf("  [%s]\n", cub->map[i]);
 		i++;
 	}
-	return (true);
 }
 
-void	ft_free_split(char **split)
+int	main(int ac, char **av)
 {
-	int	i;
+	t_cub	cub;
 
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
+	if (ac != 2)
 	{
-		free(split[i]);
-		i++;
+		printf("Usage: ./cub3d <file.cub>\n");
+		return (1);
 	}
-	free(split);
-}
-
-void	free_cub(t_cub *cub)
-{
-	int	i;
-
-	if (cub->no)
-		free(cub->no);
-	if (cub->so)
-		free(cub->so);
-	if (cub->we)
-		free(cub->we);
-	if (cub->ea)
-		free(cub->ea);
-	if (cub->map)
-	{
-		i = 0;
-		while (i < cub->map_h)
-		{
-			free(cub->map[i]);
-			i++;
-		}
-		free(cub->map);
-	}
+	if (!parsing(av[1], &cub))
+		return (1);
+	printf("=== Parsing OK ===\n");
+	printf("NO: %s\n", cub.no);
+	printf("SO: %s\n", cub.so);
+	printf("WE: %s\n", cub.we);
+	printf("EA: %s\n", cub.ea);
+	printf("F:  %d,%d,%d\n", cub.f[0], cub.f[1], cub.f[2]);
+	printf("C:  %d,%d,%d\n", cub.c[0], cub.c[1], cub.c[2]);
+	printf("Player: %c at (%d, %d)\n",
+		cub.player_dir, cub.player_x, cub.player_y);
+	print_map(&cub);
+	free_cub(&cub);
+	return (0);
 }
