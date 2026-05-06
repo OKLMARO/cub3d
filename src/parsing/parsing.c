@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/04/08 14:48:58 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/01 17:06:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,63 +16,33 @@ bool	checknamefile(char *file)
 {
 	int	i;
 
-	i = 0;
-	while (file[i] && file[i] != '.')
-		i++;
-	if (!file[i])
+	if (!file)
 		return (false);
-	if (!ft_strncmp(file + i, "cub", 3))
+	i = 0;
+	while (file[i])
+		i++;
+	if (i < 4)
+		return (false);
+	if (!ft_strncmp(file + (i - 4), ".cub", 4))
 		return (true);
 	return (false);
-}
-
-bool	checktexturebis(int fdfile, t_cub *cub)
-{
-	char	*line;
-
-	line = get_next_line(fdfile);
-	if (line && !ft_strncmp(line, "WE", 2) && (line + 3))
-	{
-		cub->WEtextures = ft_strdup(line + 3);
-		if (!cub->WEtextures)
-			return (free(line), false);
-		free(line);
-		line = get_next_line(fdfile);
-		if (line && !ft_strncmp(line, "EA", 2) && (line + 3))
-		{
-			cub->EAtextures = ft_strdup(line + 3);
-			if (!cub->EAtextures)
-				return (free(line), false);
-			return (free(line), true);
-		}
-		return (free(line), false);
-	}
-	return (free(line), false);
 }
 
 bool	checktexture(int fdfile, t_cub *cub)
 {
 	char	*line;
 
-	line = get_next_line(fdfile);
-	if (line && !ft_strncmp(line, "NO", 2))
+	while ((line = get_next_line(fdfile)))
 	{
-		cub->NOtextures = ft_strdup(line + 3);
-		if (!cub->NOtextures)
-			return (free(line), false);
-		free(line);
-		line = get_next_line(fdfile);
-		if (line && !ft_strncmp(line, "SO", 2) && (line + 3))
+		if (find_pos(line, cub) || find_posbis(line, cub))
 		{
-			cub->SOtextures = ft_strdup(line + 3);
-			if (!cub->SOtextures)
-				return (free(line), false);
 			free(line);
-			return (checktexturebis(fdfile, cub));
+			continue;
 		}
-		return (free(line), false);
+		cub->stash = line;
+		return (true);
 	}
-	return (free(line), false);
+	return (true);
 }
 
 bool	checkflourbis(t_cub *cub, char *line, char *rgb[], int i)
