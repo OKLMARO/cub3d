@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/13 15:30:33 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/13 16:36:06 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,24 +107,93 @@ bool	checkflourbis(t_cub *cub, char *line, char *rgb[], int i)
 	return (true);
 }
 
+int	addRGB(char *line, int *i)
+{
+	int		k;
+	char	rgb[4];
+
+	k = 0;
+	ft_bzero(rgb, 4);
+	while (k < 3 && ft_isdigit(line[*i + k]))
+	{
+		rgb[k] = line[*i + k];
+		k++;
+	}
+	if (line[*i + k] == ',')
+	{
+		if (k == 0)
+			return (-1);
+		*i = *i + 1;
+	}
+	else if (k == 0 || (ft_isdigit(line[*i + k]) && k == 3))
+		return (-1);
+	if (ft_atoi(rgb) < 256 && ft_atoi(rgb) >= 0)
+	{
+		*i = *i + k;
+		return (ft_atoi(rgb));
+	}
+	return (-1);
+}
+
 bool	checkrgbf(int fdfile, t_cub *cub)
 {
 	int		i;
+	int		j;
+	int		temp;
 	char	*line;
 
 	line = get_next_line(fdfile);
 	if (line && !ft_strncmp("F ", line, 2) && line[2])
 	{
 		i = 2;
-		
+		j = 0;
+		while (j < 3)
+		{
+			temp = addRGB(line, &i);
+			if (temp == -1)
+				return (free(line), false);
+			cub->F[j] = temp;
+			j++;
+		}
+		if (line[i] != '\n')
+			return (free(line), false);
+		return (free(line), true);
 	}
+	return (free(line), false);
+}
+
+bool	checkrgbc(int fdfile, t_cub *cub)
+{
+	int		i;
+	int		j;
+	int		temp;
+	char	*line;
+
+	line = get_next_line(fdfile);
+	if (line && !ft_strncmp("C ", line, 2) && line[2])
+	{
+		i = 2;
+		j = 0;
+		while (j < 3)
+		{
+			temp = addRGB(line, &i);
+			if (temp == -1)
+				return (free(line), false);
+			cub->C[j] = temp;
+			j++;
+		}
+		if (line[i] != '\n')
+			return (free(line), false);
+		return (free(line), true);
+	}
+	return (free(line), false);
 }
 
 bool	checkrgb(int fdfile, t_cub *cub)
 {
 	if (checkrgbf(fdfile, cub) == true)
 	{
-		if (checkrgbsc(fdfile, cub) == true)
+		if (checkrgbc(fdfile, cub) == true)
 			return (true);
 		return (false);
 	}
@@ -144,6 +213,6 @@ bool	parsing(char *file, t_cub *cub)
 		return (ft_putendl_fd("Error\nTexture", 2), close(fdfile), false);
 	free(get_next_line(fdfile));
 	if (checkrgb(fdfile, cub) == false)
+		return (ft_putendl_fd("Error\nRGB", 2), close(fdfile), false);
 	return (close(fdfile), true);
-	return (ft_putendl_fd("Error\nRGB", 2), close(fdfile), false);
 }
