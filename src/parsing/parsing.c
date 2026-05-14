@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/13 16:36:06 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/14 13:05:45 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,124 +80,77 @@ bool	checktexture(int fdfile, t_cub *cub)
 	return (free(line), false);
 }
 
-bool	checkflourbis(t_cub *cub, char *line, char *rgb[], int i)
+bool	getmaproutine(char *line, t_cub *cub, int i)
 {
-	int	j;
+	int		j;
+	char	**temp;
 
-	j = i + 2;
-	i = 0;
-	while (line[i + j] && (i > 3 || line[i + j] == ',')
-		&& ft_isdigit(line[i + j]))
+	temp = malloc((i + 1) * sizeof(char *));
+	if (!temp)
+		return (false);
+	j = 0;
+	while (j < i)
 	{
-		rgb[i] = line[i + j];
-		i++;
+		if (cub->map)
+			temp[j] = cub->map[j];
+		j++;
 	}
-	if (i == 0 && line[i + j] == ',')
-		return (free(line), false);
-	j = i + j;
-	i = 0;
-	while (line[i + j] && (i > 3 || line[i + j] == ',')
-		&& ft_isdigit(line[i + j]))
-	{
-		rgb[i] = line[i + j];
-		i++;
-	}
-	if (i == 0 && line[i + j] == ',')
-		return (free(line), false);
+	temp[j] = line;
+	temp[j + 1] = NULL;
+	if (cub->map)
+		free(cub->map);
+	cub->map = temp;
 	return (true);
 }
 
-int	addRGB(char *line, int *i)
-{
-	int		k;
-	char	rgb[4];
-
-	k = 0;
-	ft_bzero(rgb, 4);
-	while (k < 3 && ft_isdigit(line[*i + k]))
-	{
-		rgb[k] = line[*i + k];
-		k++;
-	}
-	if (line[*i + k] == ',')
-	{
-		if (k == 0)
-			return (-1);
-		*i = *i + 1;
-	}
-	else if (k == 0 || (ft_isdigit(line[*i + k]) && k == 3))
-		return (-1);
-	if (ft_atoi(rgb) < 256 && ft_atoi(rgb) >= 0)
-	{
-		*i = *i + k;
-		return (ft_atoi(rgb));
-	}
-	return (-1);
-}
-
-bool	checkrgbf(int fdfile, t_cub *cub)
+bool	getmap(int fdfile, t_cub *cub)
 {
 	int		i;
-	int		j;
-	int		temp;
 	char	*line;
 
+	cub->map = NULL;
+	i = 1;
 	line = get_next_line(fdfile);
-	if (line && !ft_strncmp("F ", line, 2) && line[2])
+	while (line)
 	{
-		i = 2;
-		j = 0;
-		while (j < 3)
-		{
-			temp = addRGB(line, &i);
-			if (temp == -1)
-				return (free(line), false);
-			cub->F[j] = temp;
-			j++;
-		}
-		if (line[i] != '\n')
+		if (!getmaproutine(line, cub, i))
 			return (free(line), false);
-		return (free(line), true);
+		i++;
+		line = get_next_line(fdfile);
 	}
-	return (free(line), false);
+	return (true);
 }
 
-bool	checkrgbc(int fdfile, t_cub *cub)
+bool	checkchar(t_cub *cub)
 {
-	int		i;
-	int		j;
-	int		temp;
-	char	*line;
+	int	i;
+	int	j;
 
-	line = get_next_line(fdfile);
-	if (line && !ft_strncmp("C ", line, 2) && line[2])
+	i = 0;
+	while (cub->map[i])
 	{
-		i = 2;
 		j = 0;
-		while (j < 3)
+		while (cub->map[i][j])
 		{
-			temp = addRGB(line, &i);
-			if (temp == -1)
-				return (free(line), false);
-			cub->C[j] = temp;
+			if (cub->map[i][j] != '1' && cub->map[i][j] != '0' &&
+				cub->map[i][j] != 'N' && cub->map[i][j] != 'S' &&
+				cub->map[i][j] != 'E' && cub->map[i][j] != 'W' &&
+				cub->map[i][j] != '\n' && cub->map[i][j] != ' ')
+				return (false);
 			j++;
 		}
-		if (line[i] != '\n')
-			return (free(line), false);
-		return (free(line), true);
+		i++;
 	}
-	return (free(line), false);
+	return (true);
 }
 
-bool	checkrgb(int fdfile, t_cub *cub)
+bool	checkmap(int fdfile, t_cub *cub)
 {
-	if (checkrgbf(fdfile, cub) == true)
-	{
-		if (checkrgbc(fdfile, cub) == true)
-			return (true);
+	if (!getmap(fdfile, cub))
 		return (false);
-	}
-	return (false);
+	if (!checkchar(cub))
+		return (false);
+	return (true);
 }
 
 bool	parsing(char *file, t_cub *cub)
@@ -205,14 +158,17 @@ bool	parsing(char *file, t_cub *cub)
 	int	fdfile;
 
 	if (!file || checknamefile(file) == false)
-		return (ft_putendl_fd("Error\nFile name", 2), false);
+		return (ft_putendl_fd("Error\nFile name", 1), false);
 	fdfile = open(file, O_RDONLY);
 	if (fdfile == -1)
-		return (ft_putendl_fd("Error\nOpen failed", 2), false);
+		return (ft_putendl_fd("Error\nOpen failed", 1), false);
 	if (checktexture(fdfile, cub) == false)
-		return (ft_putendl_fd("Error\nTexture", 2), close(fdfile), false);
+		return (ft_putendl_fd("Error\nTexture", 1), close(fdfile), false);
 	free(get_next_line(fdfile));
 	if (checkrgb(fdfile, cub) == false)
-		return (ft_putendl_fd("Error\nRGB", 2), close(fdfile), false);
+		return (ft_putendl_fd("Error\nRGB", 1), close(fdfile), false);
+	free(get_next_line(fdfile));
+	if (checkMap(fdfile, cub) == false)
+		return (ft_putendl_fd("Error\nMap", 1), close(fdfile), false);
 	return (close(fdfile), true);
 }
