@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/03/30 13:03:19 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/14 11:28:37 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ typedef struct s_cub
 	char	*WEtextures;
 	char	*EAtextures;
 }			t_cub;
+
+void	free_double(char **tab_str);
+bool	checkrgb(int fdfile, t_cub *cub);
 
 #endif
