@@ -12,40 +12,28 @@
 
 #include "../include/cub.h"
 
-static void	print_map(t_cub *cub)
+int   game_loop(t_game *p)
 {
-	int	i;
-
-	i = 0;
-	printf("Map (%dx%d):\n", cub->map_w, cub->map_h);
-	while (i < cub->map_h)
-	{
-		printf("  [%s]\n", cub->map[i]);
-		i++;
-	}
+    raycasting(p);
+    mlx_put_image_to_window(p->mlx, p->win, p->img.ptr, 0, 0);
+    return (0);
 }
 
-int	main(int ac, char **av)
+int   main(int ac, char **av)
 {
-	t_cub	cub;
+    t_game  game;
 
-	if (ac != 2)
-	{
-		printf("Usage: ./cub3d <file.cub>\n");
-		return (1);
-	}
-	if (!parsing(av[1], &cub))
-		return (1);
-	printf("=== Parsing OK ===\n");
-	printf("NO: %s\n", cub.no);
-	printf("SO: %s\n", cub.so);
-	printf("WE: %s\n", cub.we);
-	printf("EA: %s\n", cub.ea);
-	printf("F:  %d,%d,%d\n", cub.f[0], cub.f[1], cub.f[2]);
-	printf("C:  %d,%d,%d\n", cub.c[0], cub.c[1], cub.c[2]);
-	printf("Player: %c at (%d, %d)\n",
-		cub.player_dir, cub.player_x, cub.player_y);
-	print_map(&cub);
-	free_cub(&cub);
-	return (0);
+    if (ac != 2)
+    {
+        printf("Error\nUsage: ./cub3d <file.cub>\n");
+            return (1);
+    }
+    if (!parsing(av[1], &game.cub))
+        return (1);
+    if (!init_game(&game))
+        return (1);
+    if (!load_textures(&game))
+        return (1);
+    setup_hooks(&game);
+    return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "../../include/cub.h"
 
-static void	move_forward_back(t_game *p, int keycode)
+void	move_forward_back(t_game *p, int keycode)
 {
 	if (keycode == 119)
 	{
@@ -34,7 +34,7 @@ static void	move_forward_back(t_game *p, int keycode)
 	}
 }
 
-static void	move_strafe(t_game *p, int keycode)
+void	move_strafe(t_game *p, int keycode)
 {
 	if (keycode == 100)
 	{
@@ -56,3 +56,19 @@ static void	move_strafe(t_game *p, int keycode)
 	}
 }
 
+void	rotate(t_game *p, double rot_speed)
+{
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = p->dir_x;
+	p->dir_x = p->dir_x * cos(rot_speed)
+		- p->dir_y * sin(rot_speed);
+	p->dir_y = old_dir_x * sin(rot_speed)
+		+ p->dir_y * cos(rot_speed);
+	old_plane_x = p->plane_x;
+	p->plane_x = p->plane_x * cos(rot_speed)
+		- p->plane_y * sin(rot_speed);
+	p->plane_y = old_plane_x * sin(rot_speed)
+		+ p->plane_y * cos(rot_speed);
+}

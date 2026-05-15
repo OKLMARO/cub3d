@@ -27,6 +27,9 @@
 # define WIN_W 1280
 # define WIN_H 720
 
+#define MOVE_SPEED 0.10
+#define ROT_SPEED 0.05
+
 typedef struct s_ray
 {
    double  dir_x;
@@ -109,4 +112,13 @@ int           close_game(t_game *game);
 int           key_hook(int keycode, t_game *game);
 void		  setup_hooks(t_game *game);
 int           load_all_textures(t_game *p);
+void		run_dda(t_game *p, t_ray *r);
+void	 	set_wall_draw(t_ray *r);
+void  		 raycasting(t_game *p);
+void  		draw_column(t_game *g, t_ray *r, int x);
+void		move_strafe(t_game *p, int keycode);
+void		move_strafe(t_game *p, int keycode);
+void		rotate(t_game *p, double rot_speed);
+int   		game_loop(t_game *p);
+
 #endif

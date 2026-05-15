@@ -1,7 +1,8 @@
 NAME		= cub3d
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS      = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux
+MLX_FLAGS   = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 SRC_PARSING	= src/parsing/parsing.c \
 			  src/parsing/parse_textures.c \
@@ -10,18 +11,26 @@ SRC_PARSING	= src/parsing/parsing.c \
 			  src/parsing/validate_map.c \
 			  src/parsing/parsing_utils.c
 
+ SRC_EXEC    = src/exec/init.c \
+                src/exec/hooks.c \
+                src/exec/textures.c \
+                src/exec/raycasting.c \
+                src/exec/dda.c \
+                src/exec/render.c \
+                src/exec/movement.c
+
 SRC_MAIN	= src/main.c
 
 LIBFT_SRC	= $(wildcard include/libft/*.c)
 GNL_SRC		= $(wildcard include/gnl/*.c)
 
-SRC			= $(SRC_PARSING) $(SRC_MAIN) $(LIBFT_SRC) $(GNL_SRC)
+SRC			= $(SRC_PARSING) $(SRC_MAIN) $(SRC_EXEC) $(LIBFT_SRC) $(GNL_SRC)
 OBJ			= $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS)  $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
