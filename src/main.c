@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 11:00:00 by marvin            #+#    #+#             */
-/*   Updated: 2026/05/06 11:00:00 by marvin           ###   ########.fr       */
+/*   Updated: 2026/05/16 00:08:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int   main(int ac, char **av)
         return (1);
     if (!init_game(&game))
         return (1);
-    if (!load_textures(&game))
+    if (!load_all_textures(&game))
         return (1);
     setup_hooks(&game);
     return (0);

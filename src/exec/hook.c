@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: czinsou42 <czinsou42@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:25:21 by czinsou42         #+#    #+#             */
-/*   Updated: 2026/05/15 13:29:30 by czinsou42        ###   ########.fr       */
+/*   Updated: 2026/05/16 00:06:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int   key_hook(int keycode, t_game *p)
     if (keycode == 65307)
             close_game(p);
     else if (keycode == 119)
-            move_fb(p, 1);
+            move_forward_back(p, 1);
     else if (keycode == 115)
-            move_fb(p, -1);
+            move_forward_back(p, -1);
     else if (keycode == 97)
             move_strafe(p, -1);
     else if (keycode == 100)

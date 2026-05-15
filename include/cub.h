@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: czinsou42 <czinsou42@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/15 18:25:16 by czinsou42        ###   ########.fr       */
+/*   Updated: 2026/05/16 00:06:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void		run_dda(t_game *p, t_ray *r);
 void	 	set_wall_draw(t_ray *r);
 void  		 raycasting(t_game *p);
 void  		draw_column(t_game *g, t_ray *r, int x);
-void		move_strafe(t_game *p, int keycode);
+void		move_forward_back(t_game *p, int keycode);
 void		move_strafe(t_game *p, int keycode);
 void		rotate(t_game *p, double rot_speed);
 int   		game_loop(t_game *p);
