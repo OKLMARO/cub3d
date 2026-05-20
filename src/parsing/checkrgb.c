@@ -6,13 +6,13 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 10:25:11 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/14 10:27:17 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/20 12:49:24 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub.h"
 
-int	addRGB(char *line, int *i)
+int	addrgb(char *line, int *i)
 {
 	int		k;
 	char	rgb[4];
@@ -54,10 +54,10 @@ bool	checkrgbf(int fdfile, t_cub *cub)
 		j = 0;
 		while (j < 3)
 		{
-			temp = addRGB(line, &i);
+			temp = addrgb(line, &i);
 			if (temp == -1)
 				return (free(line), false);
-			cub->F[j] = temp;
+			cub->f[j] = temp;
 			j++;
 		}
 		if (line[i] != '\n')
@@ -81,10 +81,10 @@ bool	checkrgbc(int fdfile, t_cub *cub)
 		j = 0;
 		while (j < 3)
 		{
-			temp = addRGB(line, &i);
+			temp = addrgb(line, &i);
 			if (temp == -1)
 				return (free(line), false);
-			cub->C[j] = temp;
+			cub->c[j] = temp;
 			j++;
 		}
 		if (line[i] != '\n')

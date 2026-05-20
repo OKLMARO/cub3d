@@ -6,12 +6,12 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/14 11:28:37 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/20 12:52:38 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CUB_H__
-# define __CUB_H__
+#ifndef CUB_H
+# define CUB_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -22,16 +22,21 @@
 
 typedef struct s_cub
 {
-	int		C[3];
-	int		F[3];
+	int		c[3];
+	int		f[3];
 	char	**map;
-	char	*NOtextures;
-	char	*SOtextures;
-	char	*WEtextures;
-	char	*EAtextures;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
+	char	*no_textures;
+	char	*so_textures;
+	char	*we_textures;
+	char	*ea_textures;
 }			t_cub;
 
 void	free_double(char **tab_str);
+bool	getmap(int fdfile, t_cub *cub);
 bool	checkrgb(int fdfile, t_cub *cub);
+bool	checkmap(int fdfile, t_cub *cub);
 
 #endif
