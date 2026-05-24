@@ -3,84 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/06 11:00:00 by marvin           ###   ########.fr       */
+/*   Updated: 2026/05/24 00:00:00 by czinsou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub.h"
 
-static void	init_cub(t_cub *cub)
+bool	checknamefile(char *nameFile)
 {
-	cub->no = NULL;
-	cub->so = NULL;
-	cub->we = NULL;
-	cub->ea = NULL;
-	cub->f[0] = -1;
-	cub->f[1] = -1;
-	cub->f[2] = -1;
-	cub->c[0] = -1;
-	cub->c[1] = -1;
-	cub->c[2] = -1;
-	cub->map = NULL;
-	cub->map_h = 0;
-	cub->map_w = 0;
-	cub->player_dir = 0;
-	cub->player_x = -1;
-	cub->player_y = -1;
+	int	i;
+
+	i = ft_strlen(nameFile) - 1;
+	while (i > 0 && nameFile[i] != '.')
+		i--;
+	if (!ft_strncmp(nameFile + i, ".cub", 4) && !nameFile[i + 4])
+		return (true);
+	return (false);
 }
 
-bool	check_filename(char *file)
-{
-	int	len;
-
-	if (!file)
-		return (false);
-	len = ft_strlen(file);
-	if (len < 5)
-		return (false);
-	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
-		return (false);
-	return (true);
-}
-
-static void	drain_gnl(int fd)
+bool	checktexturebis(int fdfile, t_cub *cub)
 {
 	char	*line;
 
-	line = get_next_line(fd);
-	while (line)
+	line = get_next_line(fdfile);
+	if (line && !ft_strncmp(line, "WE ", 3) && line[3])
 	{
+		line[ft_strlen(line) - 1] = 0;
+		cub->we = ft_strdup(line + 3);
+		if (!cub->we)
+			return (free(line), free(cub->no), free(cub->so), false);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(fdfile);
+		if (line && !ft_strncmp(line, "EA ", 3) && line[3])
+		{
+			line[ft_strlen(line) - 1] = 0;
+			cub->ea = ft_strdup(line + 3);
+			if (!cub->ea)
+				return (free(line), free(cub->we),
+					free(cub->no), free(cub->so), false);
+			return (free(line), true);
+		}
+		return (free(line), free(cub->we), free(cub->no),
+			free(cub->so), false);
 	}
+	return (free(line), free(cub->no), free(cub->so), false);
+}
+
+bool	checktexture(int fdfile, t_cub *cub)
+{
+	char	*line;
+
+	line = get_next_line(fdfile);
+	if (line && !ft_strncmp(line, "NO ", 3) && line[3])
+	{
+		line[ft_strlen(line) - 1] = 0;
+		cub->no = ft_strdup(line + 3);
+		if (!cub->no)
+			return (free(line), false);
+		free(line);
+		line = get_next_line(fdfile);
+		if (line && !ft_strncmp(line, "SO ", 3) && line[3])
+		{
+			line[ft_strlen(line) - 1] = 0;
+			cub->so = ft_strdup(line + 3);
+			if (!cub->so)
+				return (free(line), free(cub->no), false);
+			free(line);
+			return (checktexturebis(fdfile, cub));
+		}
+		return (free(line), free(cub->no), false);
+	}
+	return (free(line), false);
 }
 
 bool	parsing(char *file, t_cub *cub)
 {
-	int	fd;
+	int	fdfile;
 
-	init_cub(cub);
-	if (!check_filename(file))
-		return (ft_putendl_fd("Error\nInvalid file name", 2), false);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (ft_putendl_fd("Error\nCannot open file", 2), false);
-	if (!parse_textures(fd, cub) || !parse_colors(fd, cub)
-		|| !parse_map(fd, cub))
-	{
-		drain_gnl(fd);
-		close(fd);
-		free_cub(cub);
-		return (false);
-	}
-	close(fd);
-	if (!validate_map(cub))
-	{
-		free_cub(cub);
-		return (false);
-	}
-	return (true);
+	ft_bzero(cub, sizeof(t_cub));
+	cub->f[0] = -1;
+	cub->c[0] = -1;
+	if (!file || checknamefile(file) == false)
+		return (ft_putendl_fd("Error\nFile name", 2), false);
+	fdfile = open(file, O_RDONLY);
+	if (fdfile == -1)
+		return (ft_putendl_fd("Error\nOpen failed", 2), false);
+	if (checktexture(fdfile, cub) == false)
+		return (ft_putendl_fd("Error\nTexture", 2), close(fdfile), false);
+	free(get_next_line(fdfile));
+	if (checkrgb(fdfile, cub) == false)
+		return (ft_putendl_fd("Error\nRGB", 2), close(fdfile), false);
+	free(get_next_line(fdfile));
+	if (checkmap(fdfile, cub) == false)
+		return (ft_putendl_fd("Error\nMap", 2), close(fdfile), false);
+	return (close(fdfile), true);
 }

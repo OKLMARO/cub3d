@@ -27,14 +27,10 @@ int   key_hook(int keycode, t_game *p)
 {
     if (keycode == 65307)
             close_game(p);
-    else if (keycode == 119)
-            move_forward_back(p, 1);
-    else if (keycode == 115)
-            move_forward_back(p, -1);
-    else if (keycode == 97)
-            move_strafe(p, -1);
-    else if (keycode == 100)
-            move_strafe(p, 1);
+    else if (keycode == 119 || keycode == 115)
+            move_forward_back(p, keycode);
+    else if (keycode == 97 || keycode == 100)
+            move_strafe(p, keycode);
     else if (keycode == 65361)
             rotate(p, -ROT_SPEED);
     else if (keycode == 65363)

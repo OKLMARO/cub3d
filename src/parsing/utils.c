@@ -1,53 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/06 11:00:00 by marvin            #+#    #+#             */
-/*   Updated: 2026/05/06 11:00:00 by marvin           ###   ########.fr       */
+/*   Created: 2026/05/14 11:24:49 by oamairi           #+#    #+#             */
+/*   Updated: 2026/05/24 00:00:00 by czinsou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub.h"
-
-char	*skip_spaces(char *str)
-{
-	while (*str == ' ' || *str == '\t')
-		str++;
-	return (str);
-}
-
-bool	is_empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t'
-			&& line[i] != '\n' && line[i] != '\r')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
 
 void	free_cub(t_cub *cub)
 {

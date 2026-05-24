@@ -24,11 +24,10 @@ MLX_FLAGS	= -Linclude/minilibx-linux \
 			  -lmlx -lXext -lX11 -lm
 
 SRC_PARSING	= src/parsing/parsing.c \
-			  src/parsing/parse_textures.c \
-			  src/parsing/parse_colors.c \
-			  src/parsing/parse_map.c \
-			  src/parsing/validate_map.c \
-			  src/parsing/parsing_utils.c
+			  src/parsing/checkrgb.c \
+			  src/parsing/checkmap.c \
+			  src/parsing/getmap.c \
+			  src/parsing/utils.c
 
 SRC_EXEC	= src/exec/init.c \
 			  src/exec/hook.c \

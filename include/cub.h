@@ -21,7 +21,7 @@
 # include <math.h>
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
-# include "../minilibx-linux/mlx.h"
+# include "minilibx-linux/mlx.h"
 
 
 # define WIN_W 1280
@@ -92,19 +92,17 @@ typedef struct s_cub
   }           t_game;
 
 // parsing
-bool	parsing(char *file, t_cub *cub);
-bool	parse_textures(int fd, t_cub *cub);
-bool	parse_colors(int fd, t_cub *cub);
-bool	parse_map(int fd, t_cub *cub);
-bool	validate_map(t_cub *cub);
-
-// parsing utils
-bool	check_filename(char *file);
-bool	parse_color_line(char *line, int *rgb);
-bool	is_empty_line(char *line);
-char	*skip_spaces(char *str);
-void	free_cub(t_cub *cub);
-void	ft_free_split(char **split);
+bool		parsing(char *file, t_cub *cub);
+bool		checktexture(int fdfile, t_cub *cub);
+bool		checktexturebis(int fdfile, t_cub *cub);
+bool		checkrgb(int fdfile, t_cub *cub);
+bool		checkmap(int fdfile, t_cub *cub);
+bool		getmap(int fdfile, t_cub *cub);
+bool		checkchar(t_cub *cub);
+bool		checkplayer(t_cub *cub, int total);
+bool		checkwalls(t_cub *cub);
+bool		checkwallsbis(t_cub *cub, int i, int j);
+void		free_cub(t_cub *cub);
 
 // EXEC
 int           init_game(t_game *game);
