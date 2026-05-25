@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../libft/libft.h"
 
-char	*ft_strchr(char *s, int c)
+static char	*gnl_strchr(char *s, int c)
 {
 	size_t	i;
 
@@ -30,7 +31,7 @@ char	*ft_strchr(char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+static char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*res;
 	int		i;
@@ -68,7 +69,7 @@ char	*get_line(int fd, char *after)
 	if (!buffer)
 		return (NULL);
 	line = 1;
-	while (!ft_strchr(after, '\n') && line > 0)
+	while (!gnl_strchr(after, '\n') && line > 0)
 	{
 		ft_bzero(buffer, BUFFER_SIZE + 1);
 		line = read(fd, buffer, BUFFER_SIZE);
@@ -77,7 +78,7 @@ char	*get_line(int fd, char *after)
 			free(buffer);
 			return (NULL);
 		}
-		after = ft_strjoin(after, buffer);
+		after = gnl_strjoin(after, buffer);
 		if (!after)
 		{
 			free(buffer);
@@ -106,7 +107,7 @@ char	*get_next_line(int fd)
 	res = ft_strsup(after_n, '\n');
 	if (!res)
 		return (free(after_n), after_n = NULL, (NULL));
-	tmp = ft_strchr(after_n, '\n');
+	tmp = gnl_strchr(after_n, '\n');
 	if (tmp)
 		ft_swap(&after_n, tmp);
 	else

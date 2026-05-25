@@ -1,0 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: czinsou42 <czinsou42@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 14:40:03 by czinsou42         #+#    #+#             */
+/*   Updated: 2026/05/15 14:40:34 by czinsou42        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/cub.h"
+
+static int load_one_texture(t_game *p, int i, char *path)
+{
+    p->texture[i].ptr = mlx_xpm_file_to_image(p->mlx, path, &p->texture[i].width, &p->texture[i].height);
+    if (!p->texture[i].ptr)
+        return (0);
+    p->texture[i].addr = mlx_get_data_addr(p->texture[i].ptr, &p->texture[i].bpp, &p->texture[i].line_len, &p->texture[i].endian);
+    if (!p->texture[i].addr)
+        return (0);
+    return (1);
+}
+
+int load_all_textures(t_game *p)
+{
+    if (!load_one_texture(p, 0, p->cub.no))
+        return (0);
+    if (!load_one_texture(p, 1, p->cub.so))
+        return (0);
+    if (!load_one_texture(p, 2, p->cub.we))
+        return (0);
+    if (!load_one_texture(p, 3, p->cub.ea))
+        return (0);
+    return (1);
+}

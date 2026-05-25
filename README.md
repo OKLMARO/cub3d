@@ -1,0 +1,1 @@
+https://timallanwheeler.com/blog/2023/04/01/wolfenstein-3d-raycasting-in-c/ (sources)
