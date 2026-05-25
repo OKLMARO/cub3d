@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:25:21 by czinsou42         #+#    #+#             */
-/*   Updated: 2026/05/25 15:26:01 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/25 15:31:28 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	close_game(t_game *p)
 	return (0);
 }
 
-int   key_hook(int keycode, t_game *p)
+int	key_hook(int keycode, t_game *p)
 {
 	if (keycode == 65307)
 		close_game(p);
@@ -38,7 +38,7 @@ int   key_hook(int keycode, t_game *p)
 	return (0);
 }
 
-void  setup_hooks(t_game *p)
+void	setup_hooks(t_game *p)
 {
 	mlx_hook(p->win, 2, 1L << 0, key_hook, p);
 	mlx_hook(p->win, 17, 0, close_game, p);

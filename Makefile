@@ -3,73 +3,45 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: czinsou <czinsou@student.42.fr>              +#+  +:+       +#+         #
+#    By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/05/16 00:02:06 by czinsou            #+#    #+#              #
-#    Updated: 2026/05/16 00:02:06 by czinsou           ###   ########.fr        #
+#    Created: 2026/05/25 15:42:38 by oamairi           #+#    #+#              #
+#    Updated: 2026/05/25 15:52:52 by oamairi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME	=	cub3d
 
+CC		=	cc
 
-NAME		= cub3d
+CFLAGS	=	-Wall -Wextra -Werror
 
-CC			= gcc
+SRCS	=	src/parsing/checkmap.c src/parsing/checkrgb.c src/parsing/getmap.c \
+			src/parsing/parsing.c src/parsing/utils.c src/main.c \
+			include/gnl/get_next_line.c include/gnl/get_next_line_utils.c \
+			src/exec/hook.c src/exec/init.c src/exec/mouvement.c \
+			src/exec/raycasting.c src/exec/render.c src/exec/texture.c\
 
-CFLAGS		= -Wall -Wextra -Werror \
-			  -Iinclude \
-			  -Iinclude/minilibx-linux
+OBJS	=	$(SRCS:.c=.o)
 
-MLX_FLAGS	= -Linclude/minilibx-linux \
-			  -lmlx -lXext -lX11 -lm
+RM		=	rm -f
 
-SRC_PARSING	= src/parsing/parsing.c \
-			  src/parsing/checkrgb.c \
-			  src/parsing/checkmap.c \
-			  src/parsing/getmap.c \
-			  src/parsing/utils.c
-
-SRC_EXEC	= src/exec/init.c \
-			  src/exec/hook.c \
-			  src/exec/texture.c \
-			  src/exec/raycasting.c \
-			  src/exec/render.c \
-			  src/exec/mouvement.c
-
-SRC_MAIN	= src/main.c
-
-LIBFT_SRC	= $(wildcard include/libft/*.c)
-GNL_SRC		= $(wildcard include/gnl/*.c)
-
-SRC			= $(SRC_PARSING) $(SRC_EXEC) $(SRC_MAIN) \
-			  $(LIBFT_SRC) $(GNL_SRC)
-
-OBJ			= $(SRC:.c=.o)
+LIBFT	=	include/libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(MAKE) -C include/libft bonus
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -Lmlx -lmlx -lXext -lX11 -lm -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	$(MAKE) -C include/libft clean
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(MAKE) -C include/libft fclean
+	$(RM) $(NAME)
 
 re: fclean all
 
-test: $(NAME)
-	@echo "=== Test valid map ==="
-	./$(NAME) map/subject.cub
-	@echo ""
-	@echo "=== Test bad extension ==="
-	-./$(NAME) map/subject.cb
-	@echo ""
-	@echo "=== Test nonexistent file ==="
-	-./$(NAME) map/nonexist.cub
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re
