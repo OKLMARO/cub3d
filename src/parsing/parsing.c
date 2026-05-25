@@ -6,11 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/05/20 12:50:59 by oamairi          ###   ########.fr       */
-=======
-/*   Updated: 2026/05/24 00:00:00 by czinsou          ###   ########.fr       */
->>>>>>> origin/Raycasting
+/*   Updated: 2026/05/25 15:14:11 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +32,15 @@ bool	checktexturebis(int fdfile, t_cub *cub)
 	if (line && !ft_strncmp(line, "WE ", 3) && line[3])
 	{
 		line[ft_strlen(line) - 1] = 0;
-<<<<<<< HEAD
 		cub->we_textures = ft_strdup(line + 3);
 		if (!cub->we_textures)
 			return (free(line), free(cub->no_textures),
 				free(cub->so_textures), false);
-=======
-		cub->we = ft_strdup(line + 3);
-		if (!cub->we)
-			return (free(line), free(cub->no), free(cub->so), false);
->>>>>>> origin/Raycasting
 		free(line);
 		line = get_next_line(fdfile);
 		if (line && !ft_strncmp(line, "EA ", 3) && line[3])
 		{
 			line[ft_strlen(line) - 1] = 0;
-<<<<<<< HEAD
 			cub->ea_textures = ft_strdup(line + 3);
 			if (!cub->ea_textures)
 				return (free(line), free(cub->we_textures),
@@ -62,18 +51,6 @@ bool	checktexturebis(int fdfile, t_cub *cub)
 			free(cub->so_textures), false);
 	}
 	return (free(line), free(cub->no_textures), free(cub->so_textures), false);
-=======
-			cub->ea = ft_strdup(line + 3);
-			if (!cub->ea)
-				return (free(line), free(cub->we),
-					free(cub->no), free(cub->so), false);
-			return (free(line), true);
-		}
-		return (free(line), free(cub->we), free(cub->no),
-			free(cub->so), false);
-	}
-	return (free(line), free(cub->no), free(cub->so), false);
->>>>>>> origin/Raycasting
 }
 
 bool	checktexture(int fdfile, t_cub *cub)

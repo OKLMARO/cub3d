@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:03:00 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/25 15:23:00 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef struct s_cub
 	int		c[3];
 	int		f[3];
 	char	**map;
-<<<<<<< HEAD
+	int		map_w;
+	int		map_h;
 	int		player_x;
 	int		player_y;
 	char	player_dir;
@@ -64,47 +65,31 @@ typedef struct s_cub
 	char	*ea_textures;
 }			t_cub;
 
-void	free_double(char **tab_str);
-bool	getmap(int fdfile, t_cub *cub);
-bool	checkrgb(int fdfile, t_cub *cub);
-bool	checkmap(int fdfile, t_cub *cub);
-=======
-	int		map_h;
-	int		map_w;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	player_dir;
-	int		player_x;
-	int		player_y;
-}			t_cub;
+typedef struct s_img
+{
+	void	*ptr;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		width;
+	int		height;
+	int		endian;
+}			t_img;
 
-  typedef struct s_img
-  {
-      void    *ptr;
-      char    *addr;
-      int     bpp;
-      int     line_len;
-	  int     width;
-      int     height;
-      int     endian;
-   }           t_img;
-
-  typedef struct s_game
-  {
-      void    *mlx;
-      void    *win;
-      t_img   img;
-	  t_img	  texture[4];	
-      t_cub   cub;
-      double  pos_x;
-      double  pos_y;
-      double  dir_x;
-      double  dir_y;
-      double  plane_x;
-      double  plane_y;
-  }           t_game;
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+	t_img	img;
+	t_img	texture[4];
+	t_cub	cub;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}			t_game;
 
 // parsing
 bool		parsing(char *file, t_cub *cub);
@@ -118,6 +103,10 @@ bool		checkplayer(t_cub *cub, int total);
 bool		checkwalls(t_cub *cub);
 bool		checkwallsbis(t_cub *cub, int i, int j);
 void		free_cub(t_cub *cub);
+void	free_double(char **tab_str);
+bool	getmap(int fdfile, t_cub *cub);
+bool	checkrgb(int fdfile, t_cub *cub);
+bool	checkmap(int fdfile, t_cub *cub);
 
 // EXEC
 int           init_game(t_game *game);
@@ -133,6 +122,6 @@ void		move_forward_back(t_game *p, int keycode);
 void		move_strafe(t_game *p, int keycode);
 void		rotate(t_game *p, double rot_speed);
 int   		game_loop(t_game *p);
->>>>>>> origin/Raycasting
+
 
 #endif
