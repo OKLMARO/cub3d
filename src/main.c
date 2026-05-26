@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 11:00:00 by marvin            #+#    #+#             */
-/*   Updated: 2026/05/26 15:14:50 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 16:29:09 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int   main(int ac, char **av)
 			return (1);
 	}
 	if (!parsing(av[1], &game.cub))
-		return (free_cub(&game.cub), 1);
+		return (1);
 	if (!init_game(&game))
 		return (1);
 	if (!load_all_textures(&game))

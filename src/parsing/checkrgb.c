@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 10:25:11 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:02:57 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 16:33:11 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ bool	checkrgb(int fdfile, t_cub *cub)
 	{
 		if (checkrgbc(fdfile, cub) == true)
 			return (true);
-		return (false);
+		return (free_cub(cub), false);
 	}
-	return (false);
+	return (free_cub(cub), false);
 }

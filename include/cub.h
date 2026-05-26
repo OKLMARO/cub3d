@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:23:00 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 16:37:16 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@
 
 typedef struct s_ray
 {
-   double  dir_x;
-   double  dir_y;
-   double  delta_dist_x;
-   double  delta_dist_y;
-   double  side_dist_x;
-   double  side_dist_y;
-   double  perp_wall_dist;
-   int     step_x;
-   int     step_y;
-   int     map_x;
-   int     map_y;
-   int     side;
-   int     line_height;
-   int     draw_start;
-   int     draw_end;
-} 			t_ray;
+	double	dir_x;
+	double	dir_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		map_x;
+	int		map_y;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}			t_ray;
 
 typedef struct s_cub
 {
@@ -92,36 +92,36 @@ typedef struct s_game
 }			t_game;
 
 // parsing
-bool		parsing(char *file, t_cub *cub);
-bool		checktexture(int fdfile, t_cub *cub);
-bool		checktexturebis(int fdfile, t_cub *cub);
-bool		checkrgb(int fdfile, t_cub *cub);
-bool		checkmap(int fdfile, t_cub *cub);
-bool		getmap(int fdfile, t_cub *cub);
-bool		checkchar(t_cub *cub);
-bool		checkplayer(t_cub *cub, int total);
-bool		checkwalls(t_cub *cub);
-bool		checkwallsbis(t_cub *cub, int i, int j);
-void		free_cub(t_cub *cub);
+void	free_cub(t_cub *cub);
+bool	checkchar(t_cub *cub);
+bool	checkwalls(t_cub *cub);
 void	free_double(char **tab_str);
 bool	getmap(int fdfile, t_cub *cub);
+bool	getmap(int fdfile, t_cub *cub);
+bool	parsing(char *file, t_cub *cub);
 bool	checkrgb(int fdfile, t_cub *cub);
 bool	checkmap(int fdfile, t_cub *cub);
+bool	checkrgb(int fdfile, t_cub *cub);
+bool	checkmap(int fdfile, t_cub *cub);
+bool	checkplayer(t_cub *cub, int total);
+bool	checktexture(int fdfile, t_cub *cub);
+bool	checktexturebis(int fdfile, t_cub *cub);
+bool	checkwallsbis(t_cub *cub, int i, int j);
 
 // EXEC
-int           init_game(t_game *game);
-int           close_game(t_game *game);
-int           key_hook(int keycode, t_game *game);
-void		  setup_hooks(t_game *game);
-int           load_all_textures(t_game *p);
-void		run_dda(t_game *p, t_ray *r);
-void	 	set_wall_draw(t_ray *r);
-void  		 raycasting(t_game *p);
-void  		draw_column(t_game *g, t_ray *r, int x);
-void		move_forward_back(t_game *p, int keycode);
-void		move_strafe(t_game *p, int keycode);
-void		rotate(t_game *p, double rot_speed);
-int   		game_loop(t_game *p);
+int		init_game(t_game *game);
+int		close_game(t_game *game);
+int		key_hook(int keycode, t_game *game);
+void	setup_hooks(t_game *game);
+int		load_all_textures(t_game *p);
+void	run_dda(t_game *p, t_ray *r);
+void	set_wall_draw(t_ray *r);
+void	raycasting(t_game *p);
+void	draw_column(t_game *g, t_ray *r, int x);
+void	move_forward_back(t_game *p, int keycode);
+void	move_strafe(t_game *p, int keycode);
+void	rotate(t_game *p, double rot_speed);
+int		game_loop(t_game *p);
 
 
 #endif

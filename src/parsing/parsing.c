@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:14:11 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 16:27:06 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ bool	checktexturebis(int fdfile, t_cub *cub)
 	char	*line;
 
 	line = get_next_line(fdfile);
-	if (line && !ft_strncmp(line, "WE ", 3) && line[3])
+	if (line && !ft_strncmp(line, "WE ", 3)
+		&& !ft_strncmp(line + (ft_strlen(line) - 5), ".xpm\n", 5))
 	{
 		line[ft_strlen(line) - 1] = 0;
 		cub->we_textures = ft_strdup(line + 3);
@@ -38,17 +39,16 @@ bool	checktexturebis(int fdfile, t_cub *cub)
 				free(cub->so_textures), false);
 		free(line);
 		line = get_next_line(fdfile);
-		if (line && !ft_strncmp(line, "EA ", 3) && line[3])
+		if (line && !ft_strncmp(line, "EA ", 3)
+			&& !ft_strncmp(line + (ft_strlen(line) - 5), ".xpm\n", 5))
 		{
 			line[ft_strlen(line) - 1] = 0;
 			cub->ea_textures = ft_strdup(line + 3);
 			if (!cub->ea_textures)
-				return (free(line), free(cub->we_textures),
-					free(cub->no_textures), free(cub->so_textures), false);
+				return (free(line), free_cub(cub), false);
 			return (free(line), true);
 		}
-		return (free(line), free(cub->we_textures), free(cub->no_textures),
-			free(cub->so_textures), false);
+		return (free(line), free_cub(cub), false);
 	}
 	return (free(line), free(cub->no_textures), free(cub->so_textures), false);
 }
@@ -58,7 +58,8 @@ bool	checktexture(int fdfile, t_cub *cub)
 	char	*line;
 
 	line = get_next_line(fdfile);
-	if (line && !ft_strncmp(line, "NO ", 3) && line[3])
+	if (line && !ft_strncmp(line, "NO ", 3)
+		&& !ft_strncmp(line + (ft_strlen(line) - 5), ".xpm\n", 5))
 	{
 		line[ft_strlen(line) - 1] = 0;
 		cub->no_textures = ft_strdup(line + 3);
@@ -66,7 +67,8 @@ bool	checktexture(int fdfile, t_cub *cub)
 			return (free(line), false);
 		free(line);
 		line = get_next_line(fdfile);
-		if (line && !ft_strncmp(line, "SO ", 3) && line[3])
+		if (line && !ft_strncmp(line, "SO ", 3)
+			&& !ft_strncmp(line + (ft_strlen(line) - 5), ".xpm\n", 5))
 		{
 			line[ft_strlen(line) - 1] = 0;
 			cub->so_textures = ft_strdup(line + 3);
@@ -78,6 +80,19 @@ bool	checktexture(int fdfile, t_cub *cub)
 		return (free(line), free(cub->no_textures), false);
 	}
 	return (free(line), false);
+}
+
+void	closegnl(int fdfile)
+{
+	char	*line;
+
+	line = get_next_line(fdfile);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fdfile);
+	}
+	close(fdfile);
 }
 
 bool	parsing(char *file, t_cub *cub)
@@ -93,12 +108,12 @@ bool	parsing(char *file, t_cub *cub)
 	if (fdfile == -1)
 		return (ft_putendl_fd("Error\nOpen failed", 2), false);
 	if (checktexture(fdfile, cub) == false)
-		return (ft_putendl_fd("Error\nTexture", 2), close(fdfile), false);
+		return (ft_putendl_fd("Error\nTexture", 2), closegnl(fdfile), false);
 	free(get_next_line(fdfile));
 	if (checkrgb(fdfile, cub) == false)
-		return (ft_putendl_fd("Error\nRGB", 2), close(fdfile), false);
+		return (ft_putendl_fd("Error\nRGB", 2), closegnl(fdfile), false);
 	free(get_next_line(fdfile));
 	if (checkmap(fdfile, cub) == false)
-		return (ft_putendl_fd("Error\nMap", 2), close(fdfile), false);
-	return (close(fdfile), true);
+		return (ft_putendl_fd("Error\nMap", 2), closegnl(fdfile), false);
+	return (closegnl(fdfile), true);
 }
