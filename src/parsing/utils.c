@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 11:24:49 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:02:51 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 15:15:23 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,18 @@ void	free_double(char **tab_str)
 		i++;
 	}
 	free(tab_str);
+}
+
+void	free_cub(t_cub *cub)
+{
+	if (cub->map)
+		free_double(cub->map);
+	if (cub->no_textures)
+		free(cub->no_textures);
+	if (cub->so_textures)
+		free(cub->so_textures);
+	if (cub->we_textures)
+		free(cub->we_textures);
+	if (cub->ea_textures)
+		free(cub->ea_textures);
 }

@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 12:44:12 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/25 15:14:19 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/05/26 15:20:35 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	checkplayer(t_cub *cub, int total)
 				cub->map[i][j] == 'E' || cub->map[i][j] == 'W')
 			{
 				cub->player_dir = cub->map[i][j];
-				cub->map[i][j] = 0;
+				cub->map[i][j] = '0';
 				cub->player_x = j;
 				cub->player_y = i;
 				total++;

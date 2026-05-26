@@ -6,7 +6,7 @@
 #    By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/25 15:42:38 by oamairi           #+#    #+#              #
-#    Updated: 2026/05/25 16:13:47 by oamairi          ###   ########.fr        #
+#    Updated: 2026/05/26 14:53:10 by oamairi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	=	cub3d
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g3
 
 SRCS	=	src/parsing/checkmap.c src/parsing/checkrgb.c src/parsing/getmap.c \
 			src/parsing/parsing.c src/parsing/utils.c src/main.c \
@@ -34,16 +34,14 @@ $(NAME): $(OBJS)
 	chmod 777 include/minilibx-linux
 	$(MAKE) -C include/minilibx-linux
 	$(MAKE) -C include/libft bonus
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -Lmlx -lmlx -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -Linclude/minilibx-linux -lmlx -lXext -lX11 -lm -o $(NAME)
 
 clean:
 	$(MAKE) -C include/libft clean
-	$(MAKE) -C include/minilibx-linux clean
 	$(RM) $(OBJS)
 
 fclean: clean
 	$(MAKE) -C include/libft fclean
-	$(MAKE) -C include/minilibx-linux fclean
 	$(RM) $(NAME)
 
 re: fclean all
