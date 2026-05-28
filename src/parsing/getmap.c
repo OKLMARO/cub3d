@@ -38,15 +38,24 @@ bool	getmaproutine(char *line, t_cub *cub, int i)
 bool	getmap(int fdfile, t_cub *cub)
 {
 	int		i;
+	int		len;
 	char	*line;
 
 	cub->map = NULL;
+	cub->map_h = 0;
+	cub->map_w = 0;
 	i = 1;
 	line = get_next_line(fdfile);
 	while (line)
 	{
 		if (!getmaproutine(line, cub, i))
 			return (free(line), false);
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			len--;
+		if (len > cub->map_w)
+			cub->map_w = len;
+		cub->map_h++;
 		i++;
 		line = get_next_line(fdfile);
 	}

@@ -79,6 +79,9 @@ void	run_dda(t_game *p, t_ray *r)
 			r->map_y += r->step_y;
 			r->side = 1;
 		}
+		if (r->map_y < 0 || r->map_y >= p->cub.map_h
+			|| r->map_x < 0 || r->map_x >= p->cub.map_w)
+			break ;
 		if (p->cub.map[r->map_y][r->map_x] == '1')
 			hit = 1;
 	}
