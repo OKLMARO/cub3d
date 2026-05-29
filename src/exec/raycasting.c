@@ -6,7 +6,7 @@
 /*   By: czinsou42 <czinsou42@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 15:02:54 by czinsou42         #+#    #+#             */
-/*   Updated: 2026/05/15 17:20:17 by czinsou42        ###   ########.fr       */
+/*   Updated: 2026/05/29 22:11:03 by czinsou42        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	run_dda(t_game *p, t_ray *r)
 			r->side = 1;
 		}
 		if (r->map_y < 0 || r->map_y >= p->cub.map_h
-			|| r->map_x < 0 || r->map_x >= p->cub.map_w)
+			|| r->map_x < 0 || r->map_x >= (int)ft_strlen(p->cub.map[r->map_y]))
 			break ;
 		if (p->cub.map[r->map_y][r->map_x] == '1')
 			hit = 1;

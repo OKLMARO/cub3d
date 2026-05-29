@@ -1,14 +1,12 @@
-NO ./texture/texture_1.xpm
-SO ./texture/texture_2.xpm
-WE ./texture/texture_3.xpm
-EA ./texture/texture_4.xpm
+NO ./texture/test_north.xpm
+SO ./texture/test_south.xpm
+WE ./texture/test_west.xpm
+EA ./texture/test_east.xpm
 
-F 220,100,0
-C 225,30,0
+F 50,50,50
+C 100,100,100
 
 111111
+1000N1
 100001
-10N001
-10000111111111
-111100000000001
-11111111111111
+111111
