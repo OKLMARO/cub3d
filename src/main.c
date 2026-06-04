@@ -6,20 +6,20 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 11:00:00 by marvin            #+#    #+#             */
-/*   Updated: 2026/05/26 16:29:09 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 13:13:43 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-int   game_loop(t_game *p)
+int	game_loop(t_game *p)
 {
-    raycasting(p);
-    mlx_put_image_to_window(p->mlx, p->win, p->img.ptr, 0, 0);
-    return (0);
+	raycasting(p);
+	mlx_put_image_to_window(p->mlx, p->win, p->img.ptr, 0, 0);
+	return (0);
 }
 
-int   main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_game  game;
 

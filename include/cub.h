@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/26 16:37:16 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 13:20:31 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_cub
 	char	**map;
 	int		map_w;
 	int		map_h;
+	char	*line;
 	int		player_x;
 	int		player_y;
 	char	player_dir;
@@ -93,6 +94,7 @@ typedef struct s_game
 
 // parsing
 void	free_cub(t_cub *cub);
+void	closegnl(int fdfile);
 bool	checkchar(t_cub *cub);
 bool	checkwalls(t_cub *cub);
 void	free_double(char **tab_str);
@@ -104,6 +106,7 @@ bool	checkmap(int fdfile, t_cub *cub);
 bool	checkrgb(int fdfile, t_cub *cub);
 bool	checkmap(int fdfile, t_cub *cub);
 bool	checkplayer(t_cub *cub, int total);
+void	updateline(t_cub *cub, int fdfile);
 bool	checktexture(int fdfile, t_cub *cub);
 bool	checktexturebis(int fdfile, t_cub *cub);
 bool	checkwallsbis(t_cub *cub, int i, int j);

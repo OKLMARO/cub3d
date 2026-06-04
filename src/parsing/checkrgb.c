@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 10:25:11 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/26 16:33:11 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 13:18:04 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,13 @@ bool	checkrgb(int fdfile, t_cub *cub)
 	if (checkrgbf(fdfile, cub) == true)
 	{
 		if (checkrgbc(fdfile, cub) == true)
+			return (true);
+		return (free_cub(cub), false);
+	}
+	if (checkrgbc(fdfile, cub) == true)
+	{
+		printf("test\n");
+		if (checkrgbf(fdfile, cub) == true)
 			return (true);
 		return (free_cub(cub), false);
 	}

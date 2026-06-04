@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 11:24:49 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/26 15:15:23 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 13:16:27 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,27 @@ void	free_cub(t_cub *cub)
 		free(cub->we_textures);
 	if (cub->ea_textures)
 		free(cub->ea_textures);
+}
+
+void	updateline(t_cub *cub, int fdfile)
+{
+	cub->line = get_next_line(fdfile);
+	while (cub->line && cub->line[0] == '\n')
+	{
+		free(cub->line);
+		cub->line = get_next_line(fdfile);
+	}
+}
+
+void	closegnl(int fdfile)
+{
+	char	*line;
+
+	line = get_next_line(fdfile);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fdfile);
+	}
+	close(fdfile);
 }
