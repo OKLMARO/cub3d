@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 11:24:49 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/04 13:16:27 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 18:38:58 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_double(char **tab_str)
 
 void	free_cub(t_cub *cub)
 {
+	if (cub->line)
+		free(cub->line);
 	if (cub->map)
 		free_double(cub->map);
 	if (cub->no_textures)

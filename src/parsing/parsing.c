@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:06:50 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/04 13:35:20 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/04 18:40:41 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,23 @@ bool	checktexturebis(t_cub *cub)
 	if (cub->line && !ft_strncmp(cub->line, "WE ", 3)
 		&& !ft_strncmp(cub->line + (ft_strlen(cub->line) - 5), ".xpm\n", 5))
 	{
+		if (cub->we_textures)
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		cub->line[ft_strlen(cub->line) - 1] = 0;
 		cub->we_textures = ft_strdup(cub->line + 3);
 		if (!cub->we_textures)
-			return (free(cub->line), free(cub->no_textures),
-				free(cub->so_textures), false);
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
+		return (free(cub->line), true);
 	}
 	if (cub->line && !ft_strncmp(cub->line, "EA ", 3)
 		&& !ft_strncmp(cub->line + (ft_strlen(cub->line) - 5), ".xpm\n", 5))
 	{
+		if (cub->ea_textures)
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		cub->line[ft_strlen(cub->line) - 1] = 0;
 		cub->ea_textures = ft_strdup(cub->line + 3);
 		if (!cub->ea_textures)
-			return (free(cub->line), free_cub(cub), false);
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		return (free(cub->line), true);
 	}
 	return (free(cub->line), false);
@@ -52,19 +56,23 @@ bool	checktexture(t_cub *cub)
 	if (cub->line && !ft_strncmp(cub->line, "NO ", 3)
 		&& !ft_strncmp(cub->line + (ft_strlen(cub->line) - 5), ".xpm\n", 5))
 	{
+		if (cub->no_textures)
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		cub->line[ft_strlen(cub->line) - 1] = 0;
 		cub->no_textures = ft_strdup(cub->line + 3);
 		if (!cub->no_textures)
-			return (free(cub->line), false);
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		return (free(cub->line), true);
 	}
 	if (cub->line && !ft_strncmp(cub->line, "SO ", 3)
 		&& !ft_strncmp(cub->line + (ft_strlen(cub->line) - 5), ".xpm\n", 5))
 	{
+		if (cub->so_textures)
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		cub->line[ft_strlen(cub->line) - 1] = 0;
 		cub->so_textures = ft_strdup(cub->line + 3);
 		if (!cub->so_textures)
-			return (free(cub->line), false);
+			(free_cub(cub), ft_putendl_fd("Error\nTextures", 2), exit(1));
 		return (free(cub->line), true);
 	}
 	return (checktexturebis(cub));
@@ -72,7 +80,10 @@ bool	checktexture(t_cub *cub)
 
 bool	dispatch_parsing(t_cub *cub)
 {
-	if ()
+	if (checktexture(cub) == false)
+	{
+		
+	}
 }
 
 bool	parsing(char *file, t_cub *cub)
