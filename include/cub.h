@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 11:25:03 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/04 13:20:31 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/08 15:41:05 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,17 @@ void	free_cub(t_cub *cub);
 void	closegnl(int fdfile);
 bool	checkchar(t_cub *cub);
 bool	checkwalls(t_cub *cub);
+bool	checktexture(t_cub *cub);
 void	free_double(char **tab_str);
+bool	checktexturebis(t_cub *cub);
 bool	getmap(int fdfile, t_cub *cub);
 bool	getmap(int fdfile, t_cub *cub);
 bool	parsing(char *file, t_cub *cub);
-bool	checkrgb(int fdfile, t_cub *cub);
+bool	checkrgb(t_cub *cub);
 bool	checkmap(int fdfile, t_cub *cub);
-bool	checkrgb(int fdfile, t_cub *cub);
 bool	checkmap(int fdfile, t_cub *cub);
 bool	checkplayer(t_cub *cub, int total);
 void	updateline(t_cub *cub, int fdfile);
-bool	checktexture(int fdfile, t_cub *cub);
-bool	checktexturebis(int fdfile, t_cub *cub);
 bool	checkwallsbis(t_cub *cub, int i, int j);
 
 // EXEC

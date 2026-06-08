@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 12:44:12 by oamairi           #+#    #+#             */
-/*   Updated: 2026/05/26 16:34:34 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/08 16:01:06 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,12 @@ bool	checkwalls(t_cub *cub)
 bool	checkmap(int fdfile, t_cub *cub)
 {
 	if (!getmap(fdfile, cub))
-		return (free_cub(cub), false);
+		return (false);
 	if (!checkchar(cub))
-		return (free_cub(cub), false);
+		return (false);
 	if (!checkplayer(cub, 0))
-		return (free_cub(cub), false);
+		return (false);
 	if (!checkwalls(cub))
-		return (free_cub(cub), false);
+		return (false);
 	return (true);
 }

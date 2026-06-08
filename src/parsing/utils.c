@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 11:24:49 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/04 18:38:58 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/08 15:54:00 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	free_cub(t_cub *cub)
 
 void	updateline(t_cub *cub, int fdfile)
 {
+	if (cub->line)
+		free(cub->line);
 	cub->line = get_next_line(fdfile);
 	while (cub->line && cub->line[0] == '\n')
 	{

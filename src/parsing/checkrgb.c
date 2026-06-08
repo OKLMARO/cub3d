@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 10:25:11 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/04 13:18:04 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/08 16:13:37 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,74 +40,62 @@ int	addrgb(char *line, int *i)
 	return (-1);
 }
 
-bool	checkrgbf(int fdfile, t_cub *cub)
+bool	checkrgbf(t_cub *cub)
 {
 	int		i;
 	int		j;
 	int		temp;
-	char	*line;
 
-	line = get_next_line(fdfile);
-	if (line && !ft_strncmp("F ", line, 2) && line[2])
+	if (cub->line && !ft_strncmp("F ", cub->line, 2) && cub->line[2])
 	{
 		i = 2;
 		j = 0;
 		while (j < 3)
 		{
-			temp = addrgb(line, &i);
+			temp = addrgb(cub->line, &i);
 			if (temp == -1)
-				return (free(line), false);
+				return (ft_putendl_fd("Error\nRGB", 2), false);
 			cub->f[j] = temp;
 			j++;
 		}
-		if (line[i] != '\n')
-			return (free(line), false);
-		return (free(line), true);
+		if (cub->line[i] != '\n')
+			return (ft_putendl_fd("Error\nRGB", 2), false);
+		return (true);
 	}
-	return (free(line), false);
+	return (false);
 }
 
-bool	checkrgbc(int fdfile, t_cub *cub)
+bool	checkrgbc(t_cub *cub)
 {
 	int		i;
 	int		j;
 	int		temp;
-	char	*line;
 
-	line = get_next_line(fdfile);
-	if (line && !ft_strncmp("C ", line, 2) && line[2])
+	if (cub->line && !ft_strncmp("C ", cub->line, 2) && cub->line[2])
 	{
 		i = 2;
 		j = 0;
 		while (j < 3)
 		{
-			temp = addrgb(line, &i);
+			temp = addrgb(cub->line, &i);
 			if (temp == -1)
-				return (free(line), false);
+				return (ft_putendl_fd("Error\nTextures", 2), false);
 			cub->c[j] = temp;
 			j++;
 		}
-		if (line[i] != '\n')
-			return (free(line), false);
-		return (free(line), true);
+		printf("%c %d\n", cub->line[i], i);
+		if (cub->line[i] != '\n')
+			return (ft_putendl_fd("Error\nTextures", 2), false);
+		return (true);
 	}
-	return (free(line), false);
+	return (false);
 }
 
-bool	checkrgb(int fdfile, t_cub *cub)
+bool	checkrgb(t_cub *cub)
 {
-	if (checkrgbf(fdfile, cub) == true)
-	{
-		if (checkrgbc(fdfile, cub) == true)
-			return (true);
-		return (free_cub(cub), false);
-	}
-	if (checkrgbc(fdfile, cub) == true)
-	{
-		printf("test\n");
-		if (checkrgbf(fdfile, cub) == true)
-			return (true);
-		return (free_cub(cub), false);
-	}
-	return (free_cub(cub), false);
+	if (checkrgbf(cub) == true)
+		return (true);
+	if (checkrgbc(cub) == true)
+		return (true);
+	return (false);
 }
