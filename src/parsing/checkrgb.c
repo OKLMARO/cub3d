@@ -6,7 +6,7 @@
 /*   By: oamairi <oamairi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 10:25:11 by oamairi           #+#    #+#             */
-/*   Updated: 2026/06/08 16:13:37 by oamairi          ###   ########.fr       */
+/*   Updated: 2026/06/09 13:24:58 by oamairi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	checkrgbf(t_cub *cub)
 			cub->f[j] = temp;
 			j++;
 		}
-		if (cub->line[i] != '\n')
+		if (cub->line[i] != '\n' || cub->line[i - 1] == ',')
 			return (ft_putendl_fd("Error\nRGB", 2), false);
 		return (true);
 	}
@@ -79,13 +79,12 @@ bool	checkrgbc(t_cub *cub)
 		{
 			temp = addrgb(cub->line, &i);
 			if (temp == -1)
-				return (ft_putendl_fd("Error\nTextures", 2), false);
+				return (ft_putendl_fd("Error\nRGB", 2), false);
 			cub->c[j] = temp;
 			j++;
 		}
-		printf("%c %d\n", cub->line[i], i);
-		if (cub->line[i] != '\n')
-			return (ft_putendl_fd("Error\nTextures", 2), false);
+		if (cub->line[i] != '\n' || cub->line[i - 1] == ',')
+			return (ft_putendl_fd("Error\nRGB", 2), false);
 		return (true);
 	}
 	return (false);

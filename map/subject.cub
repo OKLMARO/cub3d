@@ -3,7 +3,7 @@ SO ./texture/test_south.xpm
 WE ./texture/test_west.xpm
 EA ./texture/test_east.xpm
 
-C 100,100,100,
+C 100,100,100
 F 50,50,50
 
 111111
